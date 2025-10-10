@@ -10,6 +10,9 @@ public class Vehiculo {
     private String estado;
     private double costo_diario;
 
+    public Vehiculo() {
+    }
+
     public Vehiculo(int id_vehiculo, String marca, String modelo, int anio, String placa, String estado, double costo_diario) {
         this.id_vehiculo = id_vehiculo;
         this.marca = marca;

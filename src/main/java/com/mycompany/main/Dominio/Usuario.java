@@ -5,6 +5,9 @@ public class Usuario {
     private String usuario;
     private String contrasenia;
 
+    public Usuario() {
+    }
+
     public Usuario(int id_usuario, String usuario, String contrasenia) {
         this.id_usuario = id_usuario;
         this.usuario = usuario;

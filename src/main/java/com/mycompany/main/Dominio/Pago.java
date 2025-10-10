@@ -9,6 +9,9 @@ public class Pago {
     private double monto;
     private String metodo_pago;
 
+    public Pago() {
+    }
+
     public Pago(int id_pago, int id_alquiler, Date fecha_pago, double monto, String metodo_pago) {
         this.id_pago = id_pago;
         this.id_alquiler = id_alquiler;

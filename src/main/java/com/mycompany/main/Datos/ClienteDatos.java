@@ -5,11 +5,9 @@ import com.mycompany.main.Dominio.Cliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class ClienteDatos implements IClienteDatos {
 
@@ -39,7 +37,22 @@ public class ClienteDatos implements IClienteDatos {
 
     @Override
     public boolean eliminarCliente(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   String sql = "DELETE FROM clientes WHERE id_cliente = ?";
+    try (Connection conn =  Conexion.getConexion();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, cliente.getId_cliente());
+        int rows = stmt.executeUpdate();
+        if (rows > 0) {
+            System.out.println("Se eliminó el cliente");
+            return true;
+        } else {
+            System.out.println("No se encontró el cliente");
+            return false;
+        }
+    }catch(Exception e){
+        System.out.println("Ocurrió un error al eliminar el cliente " + e.getMessage());
+    }
+    return false;
     }
 
     @Override
@@ -49,7 +62,24 @@ public class ClienteDatos implements IClienteDatos {
 
     @Override
     public boolean agregarCliente(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    String sql = "INSERT INTO clientes (id_cliente, nombres, telefono, correo, licencia, fecha_registro) VALUES (?, ?, ?, ?, ?, ?)";
+    try (Connection conn = Conexion.getConexion();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, cliente.getId_cliente());
+        stmt.setString(2, cliente.getNombres()); 
+        stmt.setString(3, cliente.getTelefono());
+        stmt.setString(4, cliente.getCorreo());
+        stmt.setString(5, cliente.getLicencia());        
+         stmt.setDate(6, cliente.getFecha_registro());    
+        stmt.executeUpdate();
+        return true;
+
+    }   catch(Exception e){
+         System.out.println("Error al agregar el cliente "+ e.getMessage());
+        }
+    return false;
+    }    
     
 }
+    
+

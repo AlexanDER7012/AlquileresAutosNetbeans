@@ -1,1 +1,23 @@
 
+# Carpeta de compilación de Maven
+/target/
+
+# Archivos compilados de Java
+*.class
+
+# Archivos JAR, WAR, EAR generados
+*.jar
+*.war
+*.ear
+
+# Archivos temporales y logs
+*.log
+*.tmp
+
+# Archivos de NetBeans
+nbactions.xml
+/nbproject/private/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
