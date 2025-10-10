@@ -8,4 +8,5 @@ public interface IClienteDatos {
     public boolean eliminarCliente(Cliente cliente);
     public boolean modificarCliente(Cliente cliente);
     public boolean agregarCliente(Cliente cliente);
+    public int obtenerUltimoIdCliente();
 }

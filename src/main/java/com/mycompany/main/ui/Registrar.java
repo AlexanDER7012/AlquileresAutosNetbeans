@@ -134,8 +134,8 @@ public class Registrar extends javax.swing.JFrame {
            boolean exito = usuariosDatos.agregarUsuario(usuario);
 if (exito) {
     JOptionPane.showMessageDialog(this, "Datos validados!");
-    Principal login = new Principal();
-    login.setVisible(true);
+    login log = new login();
+    log.setVisible(true);
     this.dispose();
 } else {
     JOptionPane.showMessageDialog(this, "No se pudo registrar el usuario\nNombre de usuario ya registrado");

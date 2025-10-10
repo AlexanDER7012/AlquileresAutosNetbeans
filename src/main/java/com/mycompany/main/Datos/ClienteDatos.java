@@ -80,6 +80,21 @@ public class ClienteDatos implements IClienteDatos {
     return false;
     }    
     
+    @Override
+    public int obtenerUltimoIdCliente(){
+        String sql = "SELECT id_cliente FROM clientes ORDER BY id_cliente DESC LIMIT 1";
+        try(Connection conn = Conexion.getConexion();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()){
+             if(rs.next()){
+                 return rs.getInt("id_cliente");
+             }
+                }catch(Exception e){
+                    System.out.println("OCurrio un error al conseguir ID " +  e.getMessage());
+                }
+        return -1;
+    }
+    
 }
     
 

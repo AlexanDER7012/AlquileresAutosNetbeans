@@ -8,4 +8,5 @@ public interface IUsuarioDatos {
     public boolean eliminarUsuario(Usuario cliente);
     public boolean modificarUsuario(Usuario cliente);
     public boolean agregarUsuario(Usuario cliente);
+    public boolean compararUsuario(String usuario, String contrasena);
 }
