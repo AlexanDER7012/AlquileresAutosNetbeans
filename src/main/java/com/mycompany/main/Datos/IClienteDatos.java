@@ -6,7 +6,7 @@ import java.util.List;
 public interface IClienteDatos {
     public List<Cliente> getClientes();
     public boolean eliminarCliente(Cliente cliente);
-    public boolean modificarCliente(Cliente cliente);
+    public boolean modificarCliente(Cliente cliente, int id);
     public boolean agregarCliente(Cliente cliente);
     public int obtenerUltimoIdCliente();
 }

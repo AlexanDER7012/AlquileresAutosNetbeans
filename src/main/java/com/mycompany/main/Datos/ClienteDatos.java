@@ -56,8 +56,29 @@ public class ClienteDatos implements IClienteDatos {
     }
 
     @Override
-    public boolean modificarCliente(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean modificarCliente(Cliente cliente, int id) {
+        
+        String sql = "UPDATE clientes SET nombres = ?, telefono = ?, correo = ?, licencia = ?, fecha_registro = ? WHERE id_cliente = ?";
+    try (Connection conn =Conexion.getConexion();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, cliente.getNombres());
+        stmt.setString(2, cliente.getTelefono());
+        stmt.setString(3, cliente.getCorreo());
+        stmt.setString(4, cliente.getLicencia());
+        stmt.setDate(5, cliente.getFecha_registro());
+        stmt.setInt(6, id);
+        
+        int rows = stmt.executeUpdate();
+        if(rows>0){
+            return true;
+        }else {
+            return false;
+        }
+    } catch(Exception e){
+        System.out.println("Ocurrió un error al actualizar el cliente " + e.getMessage());
+    }
+    return false;
+        
     }
 
     @Override

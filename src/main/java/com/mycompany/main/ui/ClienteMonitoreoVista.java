@@ -7,16 +7,41 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class ClienteMonitoreoVista extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ClienteMonitoreoVista
-     */
+    private DefaultTableModel model;
+    
     public ClienteMonitoreoVista() {
+        model = new DefaultTableModel(new String []{"ID","nombres","telefono", "correo", "licencia","fecha Registro"},0);
+        
         initComponents();
+        tablaClientes.setModel(model);
         this.txtID.enable(false);
+         tablaClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            fillFieldsFromSelectedRow();
+        }
+    });
+        
+    }
+    private void fillFieldsFromSelectedRow(){
+        int row = tablaClientes.getSelectedRow();
+        if( row != -1){
+            int codigo = (int ) model.getValueAt(row, 0);
+            this.txtID.setText(String.valueOf(codigo));
+            this.txtNombres.setText(String.valueOf(model.getValueAt(row, 1)));
+            this.txtTelefono.setText((String)model.getValueAt(row,2));
+            this.txtCorreo.setText((String)model.getValueAt(row,3));
+            this.txtLicencia.setText((String)model.getValueAt(row,4));
+            
+          
+
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -72,8 +97,18 @@ public class ClienteMonitoreoVista extends javax.swing.JFrame {
         });
 
         jButton2.setText("Modificar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Eliminar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("id");
 
@@ -186,6 +221,14 @@ public class ClienteMonitoreoVista extends javax.swing.JFrame {
         agregarCliente();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+modificarCliente();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+eliminarCliente();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -242,15 +285,9 @@ public class ClienteMonitoreoVista extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 private void cargarTablaClientes(){
-DefaultTableModel modelo = new DefaultTableModel();
+
 IClienteDatos clientesDatos = new ClienteDatos();
 List<Cliente> clientes;
-modelo.addColumn("ID");
-modelo.addColumn("Nombres");
-modelo.addColumn("telefono");
-modelo.addColumn("correo");        
-modelo.addColumn("licencia");
-modelo.addColumn("FechaRegistro");
 
 clientes = clientesDatos.getClientes();
 for(Cliente clie :clientes ){
@@ -263,9 +300,10 @@ for(Cliente clie :clientes ){
     clie.getFecha_registro(),
           
     };
-    modelo.addRow(llenar);
+    
+    model.addRow(llenar);
 }
-tablaClientes.setModel(modelo);
+tablaClientes.setModel(model);
 
 }
 private void agregarCliente(){
@@ -305,6 +343,48 @@ private void agregarCliente(){
 
             
 }
+ private void modificarCliente(){
+     int id = Integer.parseInt(this.txtID.getText());
+     if (id == -1 ){
+         JOptionPane.showMessageDialog(this, "Seleccione a un cliente");
+         return;
+     }
+     try{
+      
+        
+    Cliente cliente = new Cliente ();
+    IClienteDatos service = new ClienteDatos();
+      int idGeneral = id;
+      cliente.setId_cliente(idGeneral);
+   
+
+    String nombres = this.txtNombres.getText();
+    String telefono = this.txtTelefono.getText();
+    String correo = this.txtCorreo.getText();
+    String licencia = this.txtLicencia.getText();
+            
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");         
+    String fechaTextoInicio = this.txtFechaRegistro.getText();
+    java.util.Date fechaUtil = sdf.parse(fechaTextoInicio);
+    java.sql.Date fechaSQL = new java.sql.Date(fechaUtil.getTime()); 
+    
+ 
+    cliente.setNombres(nombres);
+    cliente.setTelefono(telefono);
+    cliente.setCorreo(correo);
+    cliente.setLicencia(licencia);
+    cliente.setFecha_registro(fechaSQL);
+    
+    service.modificarCliente(cliente,idGeneral);
+    cargarTablaClientes();
+    JOptionPane.showMessageDialog(this, "Se modifico correctamente al cliente " + nombres);
+    vaciar();
+    
+    }catch(Exception e){
+        System.out.println("ha ocurrido un error" + e.getMessage());
+    }
+     
+ }
 private void vaciar(){
     this.txtNombres.setText("");
     this.txtID.setText("");
@@ -312,5 +392,16 @@ private void vaciar(){
     this.txtTelefono.setText("");
     this.txtLicencia.setText("");
     this.txtFechaRegistro.setText("");
+}
+private void eliminarCliente(){
+    int clienteEliminar = Integer.parseInt(this.txtID.getText());
+    Cliente cliente = new Cliente(clienteEliminar);
+    
+   IClienteDatos clienteDatos = new ClienteDatos();
+   clienteDatos.eliminarCliente(cliente);
+   JOptionPane.showMessageDialog(this, "Este Cliente se ha eliminado exitosamente");
+   cargarTablaClientes();
+    
+    
 }
 }
