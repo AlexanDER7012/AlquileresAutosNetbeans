@@ -58,8 +58,28 @@ public class VehiculosDatos implements IVehiculoDatos {
     }
 
     @Override
-    public boolean modificarVehiculo(Vehiculo vehiculo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean modificarVehiculo(Vehiculo vehiculo, int id) {
+        String sql = "UPDATE vehiculos SET marca = ?, modelo = ?, anio = ?, placa = ?, estado = ?, costo_diario = ? WHERE id_vehiculo = ?";
+    try (Connection conn = Conexion.getConexion();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1,vehiculo.getMarca());
+        stmt.setString(2,vehiculo.getModelo());
+        stmt.setInt(3,vehiculo.getAnio());
+        stmt.setString(4,vehiculo.getPlaca());
+        stmt.setString(5,vehiculo.getEstado());
+        stmt.setDouble(6,vehiculo.getCosto_diario());
+        stmt.setInt(7,id);
+
+        int rows = stmt.executeUpdate();
+        if(rows > 0){
+            return true;
+        } else {
+            return false;
+        }
+    } catch(Exception e){
+        System.out.println("Ocurrió un error al actualizar el vehiculo " + e.getMessage());
+    }
+    return false;
     }
 
     @Override
@@ -83,5 +103,22 @@ public class VehiculosDatos implements IVehiculoDatos {
         }
     return false;
     }
+
+    @Override
+    public int ObtenerUltimoIdVehiculo() {
+     String sql = "SELECT id_vehiculo FROM vehiculos ORDER BY id_vehiculo DESC LIMIT 1";
+    try(Connection conn = Conexion.getConexion();
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery()){
+         if(rs.next()){
+             return rs.getInt("id_vehiculo");
+         }
+    }catch(Exception e){
+        System.out.println("Ocurrio un error al conseguir ID " +  e.getMessage());
+    }
+    return -1;
+    }
+    
+    
     
 }

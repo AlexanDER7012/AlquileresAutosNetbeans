@@ -6,6 +6,7 @@ import java.util.List;
 public interface IVehiculoDatos {
    public List<Vehiculo> getVehiculos();
     public boolean eliminarVehiculo(Vehiculo vehiculo);
-    public boolean modificarVehiculo(Vehiculo vehiculo);
-    public boolean agregarVehiculo(Vehiculo vehiculo); 
+    public boolean modificarVehiculo(Vehiculo vehiculo,int id);
+    public boolean agregarVehiculo(Vehiculo vehiculo);
+    public int ObtenerUltimoIdVehiculo();
 }
