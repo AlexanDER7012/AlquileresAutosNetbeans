@@ -12,6 +12,9 @@ public class Alquiler {
     private double total;
     private String estado_renta;
     public Alquiler(){}
+    public Alquiler(int id_alquiler){
+        this.id_alquiler=id_alquiler;
+    }
     public Alquiler(int id_alquiler, int id_cliente, int id_vehiculo, Date fecha_inicio, Date fecha_fin, int dias_rentados, double total, String estado_renta) {
         this.id_alquiler = id_alquiler;
         this.id_cliente = id_cliente;

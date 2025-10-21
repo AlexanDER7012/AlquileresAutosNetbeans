@@ -58,8 +58,28 @@ public class AlquilerDatos implements IAlquilerDatos{
     }
 
     @Override
-    public boolean modificarAlquiler(Alquiler alquiler) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean modificarAlquiler(Alquiler alquiler,int Id) {
+     String sql = "UPDATE alquileres SET id_cliente = ?, id_vehiculo = ?, fecha_inicio = ?, fecha_fin = ?, dias_rentados = ?, total = ?, estado_renta = ? WHERE id_alquiler = ?";
+    
+    try (Connection conn = Conexion.getConexion();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, alquiler.getId_cliente());
+        stmt.setInt(2, alquiler.getId_vehiculo());
+        stmt.setDate(3, alquiler.getFecha_inicio());
+        stmt.setDate(4, alquiler.getFecha_fin());
+        stmt.setInt(5, alquiler.getDias_rentados());
+        stmt.setDouble(6, alquiler.getTotal());
+        stmt.setString(7, alquiler.getEstado_renta());
+        stmt.setInt(8, Id);
+
+        int rows = stmt.executeUpdate();
+        return rows > 0;
+
+    } catch (Exception e) {
+        System.out.println("Ocurrio un error al actualizar el alquiler: " + e.getMessage());
+    }
+    return false;  
     }
 
     @Override
@@ -82,6 +102,21 @@ public class AlquilerDatos implements IAlquilerDatos{
          System.out.println("Error al agregar el Alquiler "+ e.getMessage());
         }
     return false;
+    }
+
+    @Override
+    public int obtenerUltimoAlquierId() {
+        String sql = "SELECT id_alquiler FROM alquileres ORDER BY id_alquiler DESC LIMIT 1";
+        try(Connection conn = Conexion.getConexion();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()){
+             if(rs.next()){
+                 return rs.getInt("id_alquiler");
+             }
+                }catch(Exception e){
+                    System.out.println("Ocurrio un error al conseguir ID " +  e.getMessage());
+                }
+        return -1;
     }
     
 }

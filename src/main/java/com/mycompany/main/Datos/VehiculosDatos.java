@@ -45,14 +45,12 @@ public class VehiculosDatos implements IVehiculoDatos {
         stmt.setInt(1, vehiculo.getId_vehiculo());
         int rows = stmt.executeUpdate();
         if (rows > 0) {
-            System.out.println("Se eliminó el vehículo");
             return true;
         } else {
-            System.out.println("No se encontró el vehículo");
             return false;
         }
     }catch(Exception e){
-        System.out.println("Ocurrió un error al eliminar el vehículo " + e.getMessage());
+        System.out.println("Ocurrio un error al eliminar el vehiculo " + e.getMessage());
     }
     return false;
     }
@@ -77,7 +75,7 @@ public class VehiculosDatos implements IVehiculoDatos {
             return false;
         }
     } catch(Exception e){
-        System.out.println("Ocurrió un error al actualizar el vehiculo " + e.getMessage());
+        System.out.println("Ocurrio un error al actualizar el vehiculo " + e.getMessage());
     }
     return false;
     }
@@ -117,6 +115,64 @@ public class VehiculosDatos implements IVehiculoDatos {
         System.out.println("Ocurrio un error al conseguir ID " +  e.getMessage());
     }
     return -1;
+    }
+
+    @Override
+    public List<String> getPlacas() {
+         List<String> placas = new ArrayList<>();
+    String sql="SELECT placa FROM vehiculos WHERE estado = 'Disponible'";
+    
+    try (Connection conn = Conexion.getConexion();
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+
+        while (rs.next()) {
+            placas.add(rs.getString("placa"));
+        }
+
+    } catch (Exception e) {
+        System.out.println("Error al obtener las placas: " + e.getMessage());
+    }
+
+    return placas;
+    }
+
+    @Override
+    public int obtenerIdPorPlaca(String placa) {
+       String sql = "SELECT id_vehiculo FROM vehiculos WHERE placa = ?";
+    
+    try (Connection conn = Conexion.getConexion();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, placa);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("id_vehiculo");
+        }
+
+    }catch(Exception e) {
+        System.out.println("Ocurrio un error al conseguir ID: " + e.getMessage());
+    }
+    
+    return -1;
+    }
+
+    @Override
+    public double obtenerPrecioPorId(int id) {
+       String sql = "SELECT costo_diario FROM vehiculos WHERE id_vehiculo = ?";
+    
+    try (Connection conn = Conexion.getConexion();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, id);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return rs.getDouble("costo_diario");
+        }
+
+    }catch(Exception e) {
+        System.out.println("Ocurrio un error al conseguir precio: " + e.getMessage());
+    }
+    
+    return 0;
     }
     
     

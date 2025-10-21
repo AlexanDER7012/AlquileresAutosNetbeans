@@ -9,4 +9,7 @@ public interface IVehiculoDatos {
     public boolean modificarVehiculo(Vehiculo vehiculo,int id);
     public boolean agregarVehiculo(Vehiculo vehiculo);
     public int ObtenerUltimoIdVehiculo();
+    public List<String> getPlacas();
+    public int obtenerIdPorPlaca(String placa);
+    public double obtenerPrecioPorId(int id);
 }

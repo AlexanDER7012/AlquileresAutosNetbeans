@@ -325,7 +325,6 @@ private void agregarCliente(){
     String fechaTextoInicio = this.txtFechaRegistro.getText();
     java.util.Date fechaUtil = sdf.parse(fechaTextoInicio);
     java.sql.Date fechaSQL = new java.sql.Date(fechaUtil.getTime()); 
-    
     cliente.setId_cliente(id_cliente);
     cliente.setNombres(nombres);
     cliente.setTelefono(telefono);
@@ -405,4 +404,6 @@ private void eliminarCliente(){
     
     
 }
+
+
 }

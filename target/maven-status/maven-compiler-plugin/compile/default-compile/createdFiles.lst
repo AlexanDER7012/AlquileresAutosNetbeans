@@ -1,6 +1,7 @@
 com\mycompany\main\ui\Registrar$1.class
 com\mycompany\main\ui\ControlVehiculos$4.class
 com\mycompany\main\ui\login$3.class
+com\mycompany\main\ui\AlquilerVistaCompra$3.class
 com\mycompany\main\ui\ControlAlquileres$2.class
 com\mycompany\main\Dominio\Alquiler.class
 com\mycompany\main\Datos\IVehiculoDatos.class
@@ -11,6 +12,7 @@ com\mycompany\main\ui\ClienteMonitoreoVista$1.class
 com\mycompany\main\ui\ControlAlquileres$5.class
 com\mycompany\main\ui\ClienteMonitoreoVista$4.class
 com\mycompany\main\Datos\IUsuarioDatos.class
+com\mycompany\main\ui\AlquilerVistaCompra$4.class
 com\mycompany\main\ui\ClienteMonitoreoVista$5.class
 com\mycompany\main\Dominio\Cliente.class
 com\mycompany\main\ui\ControlAlquileres$6.class
@@ -24,7 +26,6 @@ com\mycompany\main\ui\ControlVehiculos$1.class
 com\mycompany\main\ui\Principal.class
 com\mycompany\main\ui\Registrar.class
 com\mycompany\main\ui\ClienteMonitoreoVista$6.class
-com\mycompany\main\ui\ControlAlquileres$7.class
 com\mycompany\main\Dominio\Usuario.class
 com\mycompany\main\Datos\VehiculosDatos.class
 com\mycompany\main\Conexion\Conexion.class
@@ -32,17 +33,21 @@ com\mycompany\main\ui\login$1.class
 com\mycompany\main\ui\ControlAlquileres$3.class
 com\mycompany\main\ui\Principal$1.class
 com\mycompany\main\Datos\UsuarioDatos.class
+com\mycompany\main\ui\AlquilerVistaCompra$1.class
 com\mycompany\main\ui\ControlVehiculos$2.class
 com\mycompany\main\ui\ControlAlquileres$1.class
 com\mycompany\main\ui\ControlVehiculos$3.class
 com\mycompany\main\ui\Registrar$2.class
+com\mycompany\main\ui\AlquilerVistaCompra.class
 com\mycompany\main\Dominio\Pago.class
 com\mycompany\main\ui\ClienteMonitoreoVista$7.class
 com\mycompany\main\ui\login.class
 com\mycompany\main\ui\ControlVehiculos.class
+com\mycompany\main\ui\AlquilerVistaCompra$2.class
 com\mycompany\main\Datos\IClienteDatos.class
 com\mycompany\main\ui\ClienteMonitoreoVista$3.class
 com\mycompany\main\Datos\ClienteDatos.class
+com\mycompany\main\ui\AlquilerVistaCompra$5.class
 com\mycompany\main\ui\ControlVehiculos$6.class
 com\mycompany\main\Datos\IPagoDatos.class
 com\mycompany\main\ui\ControlAlquileres$4.class
