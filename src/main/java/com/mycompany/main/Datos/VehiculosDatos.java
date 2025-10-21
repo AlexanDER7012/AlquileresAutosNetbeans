@@ -191,6 +191,69 @@ public class VehiculosDatos implements IVehiculoDatos {
     }
     return false;
     }
+
+    @Override
+    public List<String> getPlacasAlquilado() {
+    List<String> placas = new ArrayList<>();
+    String sql="SELECT placa FROM vehiculos WHERE estado = 'Alquilado'";
+    
+    try (Connection conn = Conexion.getConexion();
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+
+        while (rs.next()) {
+            placas.add(rs.getString("placa"));
+        }
+
+    } catch (Exception e) {
+        System.out.println("Error al obtener las placas: " + e.getMessage());
+    }
+
+    return placas;
+    }
+
+    @Override
+    public List<Vehiculo> getVehiculosAlquilados() {
+        List<Vehiculo> vehiculos = new ArrayList<>();
+    String sql = "SELECT * FROM vehiculos WHERE estado = 'Alquilado'";
+    try (Connection conn = Conexion.getConexion();
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+
+        while (rs.next()) {
+            Vehiculo v = new Vehiculo();
+            v.setId_vehiculo(rs.getInt("id_vehiculo"));
+            v.setMarca(rs.getString("marca"));
+            v.setModelo(rs.getString("modelo"));
+            v.setAnio(rs.getInt("anio"));
+            v.setPlaca(rs.getString("placa"));
+            v.setEstado(rs.getString("estado"));
+            v.setCosto_diario(rs.getDouble("costo_diario"));
+            vehiculos.add(v);
+        }
+    }catch(Exception e) {
+        System.out.println("Error al obtener los vehículos: " + e.getMessage());
+    }
+    return vehiculos;
+    }
+
+    @Override
+    public boolean actualizarEstadoVehiculo(int idVehiculo, String estado){
+     String sql ="UPDATE vehiculos SET estado = ? WHERE id_vehiculo = ?";
+        try (Connection conn = Conexion.getConexion();
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1,estado);
+        stmt.setInt(2,idVehiculo);
+        
+        int rows = stmt.executeUpdate();
+        return rows>0;
+        
+    }catch(Exception e){
+        System.out.println("Ocurrio un error al actualizar el estado del vehículo: " + e.getMessage());
+    }
+    
+    return false;
+    }
     
     
     

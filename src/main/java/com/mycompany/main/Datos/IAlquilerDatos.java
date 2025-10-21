@@ -5,8 +5,10 @@ import java.util.List;
 
 public interface IAlquilerDatos {
     public List<Alquiler> getAlquileres();
+    
     public boolean eliminarAquiler(Alquiler alquiler);
     public boolean modificarAlquiler(Alquiler alquiler, int id);
     public boolean agregarAlquiler(Alquiler alquiler);
     public int obtenerUltimoAlquierId();
+    public boolean cambiarFinalizado(int id);
 }

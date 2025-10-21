@@ -118,5 +118,22 @@ public class AlquilerDatos implements IAlquilerDatos{
                 }
         return -1;
     }
+
+    @Override
+    public boolean cambiarFinalizado(int id) {
+       String sql ="UPDATE alquileres SET estado_renta = 'Finalizado' WHERE id_vehiculo = ?";
+
+    try(Connection conn = Conexion.getConexion();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, id);
+        int rows=stmt.executeUpdate();
+        return rows>0;
+
+    }catch(Exception e) {
+        System.out.println("Ocurrio un error al actualizar el estado del Alquiler: " + e.getMessage());
+    }
+    return false;
+    }
     
 }

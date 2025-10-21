@@ -7,6 +7,7 @@ com\mycompany\main\Dominio\Alquiler.class
 com\mycompany\main\Datos\IVehiculoDatos.class
 com\mycompany\main\Datos\PagoDatos.class
 com\mycompany\main\ui\ControlVehiculos$7.class
+com\mycompany\main\ui\Devoluciones$3.class
 com\mycompany\main\Datos\AlquilerDatos.class
 com\mycompany\main\ui\ClienteMonitoreoVista$1.class
 com\mycompany\main\ui\ControlAlquileres$5.class
@@ -19,11 +20,13 @@ com\mycompany\main\ui\ControlAlquileres$6.class
 com\mycompany\main\ui\ControlVehiculos$5.class
 com\mycompany\main\Datos\IAlquilerDatos.class
 com\mycompany\main\ui\ClienteMonitoreoVista$2.class
+com\mycompany\main\ui\Devoluciones.class
 com\mycompany\main\ui\ClienteMonitoreoVista.class
 com\mycompany\main\AlquileresAutos.class
 com\mycompany\main\ui\ControlAlquileres.class
 com\mycompany\main\ui\ControlVehiculos$1.class
 com\mycompany\main\ui\Principal.class
+com\mycompany\main\ui\Devoluciones$2.class
 com\mycompany\main\ui\Registrar.class
 com\mycompany\main\ui\ClienteMonitoreoVista$6.class
 com\mycompany\main\Dominio\Usuario.class
@@ -31,6 +34,7 @@ com\mycompany\main\Datos\VehiculosDatos.class
 com\mycompany\main\Conexion\Conexion.class
 com\mycompany\main\ui\login$1.class
 com\mycompany\main\ui\ControlAlquileres$3.class
+com\mycompany\main\ui\Devoluciones$1.class
 com\mycompany\main\ui\Principal$1.class
 com\mycompany\main\Datos\UsuarioDatos.class
 com\mycompany\main\ui\AlquilerVistaCompra$1.class
@@ -40,6 +44,7 @@ com\mycompany\main\ui\ControlVehiculos$3.class
 com\mycompany\main\ui\Registrar$2.class
 com\mycompany\main\ui\AlquilerVistaCompra.class
 com\mycompany\main\Dominio\Pago.class
+com\mycompany\main\ui\Devoluciones$4.class
 com\mycompany\main\ui\login.class
 com\mycompany\main\ui\ControlVehiculos.class
 com\mycompany\main\ui\AlquilerVistaCompra$2.class
