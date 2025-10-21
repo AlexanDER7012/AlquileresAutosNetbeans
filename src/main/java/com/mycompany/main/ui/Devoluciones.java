@@ -4,6 +4,8 @@
  */
 package com.mycompany.main.ui;
 
+import com.mycompany.main.Datos.AlquilerDatos;
+import com.mycompany.main.Datos.IAlquilerDatos;
 import com.mycompany.main.Datos.IVehiculoDatos;
 import com.mycompany.main.Datos.VehiculosDatos;
 import com.mycompany.main.Dominio.Vehiculo;
@@ -236,12 +238,12 @@ private void modificarVehiculo(){
     }
     try{
 
-
+        IAlquilerDatos alquileres = new AlquilerDatos();
         Vehiculo vehiculo = new Vehiculo ();
         IVehiculoDatos service = new VehiculosDatos();
         int idGeneral = id;
         String estado = this.txtEstado.getText();
-
+        alquileres.cambiarFinalizado(idGeneral);
 
         service.actualizarEstadoVehiculo(idGeneral, estado);
         cargarTablaVehiculos();
