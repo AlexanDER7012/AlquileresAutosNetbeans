@@ -12,4 +12,5 @@ public interface IVehiculoDatos {
     public List<String> getPlacas();
     public int obtenerIdPorPlaca(String placa);
     public double obtenerPrecioPorId(int id);
+    public boolean deDisponibleAlquilado(int id);
 }

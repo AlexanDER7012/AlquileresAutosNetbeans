@@ -174,6 +174,23 @@ public class VehiculosDatos implements IVehiculoDatos {
     
     return 0;
     }
+
+    @Override
+    public boolean deDisponibleAlquilado(int id) {
+        String sql ="UPDATE vehiculos SET estado = 'Alquilado' WHERE id_vehiculo = ?";
+
+    try(Connection conn = Conexion.getConexion();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, id);
+        int rows=stmt.executeUpdate();
+        return rows>0;
+
+    }catch(Exception e) {
+        System.out.println("Ocurrio un error al actualizar el estado del vehículo: " + e.getMessage());
+    }
+    return false;
+    }
     
     
     

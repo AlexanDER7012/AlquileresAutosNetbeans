@@ -71,7 +71,6 @@ public class AlquilerVistaCompra extends javax.swing.JFrame {
         txtFechaInicio = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtFechaFin = new javax.swing.JTextField();
-        btnCalcular = new javax.swing.JButton();
         txtDiasRentados = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -102,8 +101,6 @@ public class AlquilerVistaCompra extends javax.swing.JFrame {
         jLabel8.setText("Automovil");
 
         jLabel9.setText("Fecha de Entrega");
-
-        btnCalcular.setText("obtener precio");
 
         jLabel10.setText("Total dias");
 
@@ -183,16 +180,14 @@ public class AlquilerVistaCompra extends javax.swing.JFrame {
                                                 .addGap(23, 23, 23)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(jLabel13)
-                                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(btnCalcular))))
+                                                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(jLabel10)
-                                                    .addComponent(txtDiasRentados, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                                    .addComponent(txtDiasRentados, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGap(63, 63, 63))
                                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -243,9 +238,8 @@ public class AlquilerVistaCompra extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCalcular))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -330,7 +324,6 @@ agregarCliente();        // TODO add your handling code here:
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCalcular;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -369,19 +362,43 @@ private void agregarCliente(){
     String telefono = this.txtTelefono.getText();
     String correo = this.txtCorreo.getText();
     String licencia = this.txtLicencia.getText();
-                    
+    
+    if (nombres.trim().isEmpty()||
+    correo.trim().isEmpty()||
+    telefono.trim().isEmpty()||
+    licencia.trim().isEmpty()||
+    txtFechaInicio.getText().trim().isEmpty()||
+    txtFechaFin.getText().trim().isEmpty()||
+    txtDiasRentados.getText().trim().isEmpty()||
+    txtPrecio.getText().trim().isEmpty()||
+    txtTotal.getText().trim().isEmpty()||
+    jComboBox1.getSelectedItem()==null|| 
+    jComboBox1.getSelectedItem().toString().isEmpty()){
+
+    JOptionPane.showMessageDialog(this, "Todos los campos deben estar llenos.");
+    return;
+    }
+
+    boolean valido = true;
+
+    if(txtNombres.getText().trim().length() < 3){
+    valido = false;
+    }
+    if(!txtCorreo.getText().trim().matches("^[^@\\s]+@[^@\\s]+\\.com$")){
+    valido = false;
+    }
+    if(!txtTelefono.getText().trim().matches("^[0-9]{8}$")){
+    valido=false;
+    }   
+
+    if(!valido){
+        JOptionPane.showMessageDialog(this, "Alguno(s) de los campos no cumple con el formato o longitud requerida.");
+        return;
+    }
+    
+             
     LocalDate hoy = LocalDate.now();
     java.sql.Date fecha = java.sql.Date.valueOf(hoy);
-
-    
-    cliente.setId_cliente(id_cliente);
-    cliente.setNombres(nombres);
-    cliente.setTelefono(telefono);
-    cliente.setCorreo(correo);
-    cliente.setLicencia(licencia);
-    cliente.setFecha_registro(fecha);
-    
-    service.agregarCliente(cliente);
     //*****************Alquiler*******************
      Alquiler alquiler = new Alquiler ();
     IAlquilerDatos service2 = new AlquilerDatos();
@@ -390,11 +407,12 @@ private void agregarCliente(){
         id2=1;
     }
     int id_alquiler = id2 + 1;
-    alquiler.setId_alquiler(id_alquiler);
+    
     int clientes = id_cliente;
     
     String placaSeleccionada = (String) jComboBox1.getSelectedItem();
     int idVehiculo = vehiculosDatos.obtenerIdPorPlaca(placaSeleccionada);
+    vehiculosDatos.deDisponibleAlquilado(idVehiculo);
     double precio = vehiculosDatos.obtenerPrecioPorId(idVehiculo);
     
     int vehiculo = idVehiculo;
@@ -405,7 +423,15 @@ private void agregarCliente(){
     this.txtTotal.setText(String.format("%.2f", total));
 
     String estado = "Activo";
- 
+    
+
+    cliente.setId_cliente(id_cliente);
+    cliente.setNombres(nombres);
+    cliente.setTelefono(telefono);
+    cliente.setCorreo(correo);
+    cliente.setLicencia(licencia);
+    cliente.setFecha_registro(fecha);
+    alquiler.setId_alquiler(id_alquiler);
     alquiler.setId_cliente(clientes);
     alquiler.setId_vehiculo(vehiculo);
     alquiler.setFecha_inicio(java.sql.Date.valueOf(this.txtFechaInicio.getText()));
@@ -413,11 +439,12 @@ private void agregarCliente(){
     alquiler.setDias_rentados(diasRentados);
     alquiler.setTotal(total);
     alquiler.setEstado_renta(estado);
-
     
+    service.agregarCliente(cliente);
     service2.agregarAlquiler(alquiler);
-    JOptionPane.showMessageDialog(this, "Se aigno el alquiler correctamente");
-    
+    JOptionPane.showMessageDialog(this, "Se asigno el alquiler correctamente");
+    vaciar();
+    cargarPlacas();
     }catch(Exception e){
         System.out.println("ha ocurrido un error" + e.getMessage());
     }
@@ -452,7 +479,7 @@ private void calcularDiasRentados() {
         LocalDate inicio = fechaInicioSQL.toLocalDate();
         LocalDate fin = fechaFinSQL.toLocalDate();
 
-        int dias =(int) ChronoUnit.DAYS.between(inicio, fin);
+        int dias =(int) ChronoUnit.DAYS.between(inicio,fin);
 
         if (dias >= 0) {
             txtDiasRentados.setText(String.valueOf(dias));
@@ -465,6 +492,18 @@ private void calcularDiasRentados() {
     }
 }
 
+private void vaciar() {
+    txtNombres.setText("");
+    txtTelefono.setText("");
+    txtCorreo.setText("");
+    txtLicencia.setText("");
+    txtFechaInicio.setText("");
+    txtFechaFin.setText("");
+    txtDiasRentados.setText("");
+    txtPrecio.setText("");
+    txtTotal.setText("");
+    jComboBox1.setSelectedIndex(-1);
+}
 
 }
 
